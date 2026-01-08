@@ -1,0 +1,231 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+<meta charset="UTF-8">
+<title>Lam An Binh — Cypherpunk</title>
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;600&display=swap" rel="stylesheet">
+
+<style>
+*{box-sizing:border-box;margin:0;padding:0}
+html{scroll-behavior:smooth}
+
+body{
+  font-family:'JetBrains Mono',monospace;
+  background:#05080f;
+  color:#00ffcc;
+  overflow-x:hidden;
+}
+
+/* matrix background */
+canvas{
+  position:fixed;
+  inset:0;
+  z-index:0;
+}
+
+/* layout */
+.content{
+  position:relative;
+  z-index:2;
+  max-width:900px;
+  margin:auto;
+  padding:90px 20px;
+}
+
+/* header */
+h1{
+  text-align:center;
+  font-size:56px;
+  letter-spacing:4px;
+  margin-bottom:12px;
+}
+
+/* glitch */
+.glitch{
+  position:relative;
+  display:inline-block;
+  text-shadow:0 0 20px #00ffcc;
+}
+.glitch::before,
+.glitch::after{
+  content:attr(data-text);
+  position:absolute;
+  inset:0;
+  opacity:.75;
+}
+.glitch::before{
+  color:#ff00ff;
+  animation:gl1 2s infinite linear;
+}
+.glitch::after{
+  color:#00ffff;
+  animation:gl2 1.5s infinite linear;
+}
+@keyframes gl1{
+  0%{clip-path:inset(0 0 85% 0)}
+  50%{clip-path:inset(40% 0 30% 0)}
+  100%{clip-path:inset(0 0 85% 0)}
+}
+@keyframes gl2{
+  0%{clip-path:inset(80% 0 0 0)}
+  50%{clip-path:inset(50% 0 20% 0)}
+  100%{clip-path:inset(80% 0 0 0)}
+}
+
+.subtitle{
+  text-align:center;
+  opacity:.7;
+  margin-bottom:80px;
+}
+
+/* section */
+section{
+  background:rgba(0,0,0,.65);
+  border:1px solid rgba(0,255,204,.25);
+  border-radius:12px;
+  padding:30px;
+  margin-bottom:40px;
+  box-shadow:0 0 30px rgba(0,255,204,.05);
+}
+
+section h2{
+  letter-spacing:3px;
+  margin-bottom:20px;
+}
+
+/* quote */
+.quote{
+  font-style:italic;
+  line-height:2;
+  border-left:3px solid rgba(0,255,204,.5);
+  padding-left:22px;
+}
+
+/* list */
+ul{
+  padding-left:20px;
+}
+li{margin-bottom:6px}
+
+/* decor */
+.decor{
+  text-align:center;
+  opacity:.35;
+  letter-spacing:4px;
+  margin:40px 0;
+  font-size:14px;
+}
+
+/* links */
+a{
+  color:#00ffcc;
+  text-decoration:none;
+}
+a:hover{
+  text-shadow:0 0 10px #00ffcc;
+}
+
+/* footer */
+footer{
+  text-align:center;
+  margin-top:80px;
+  font-size:13px;
+  opacity:.6;
+}
+</style>
+</head>
+<body>
+
+<canvas id="matrix"></canvas>
+
+<div class="content">
+
+  <h1>
+    <span class="glitch" data-text="LAM AN BINH">LAM AN BINH</span>
+  </h1>
+  <p class="subtitle">hevuong · nguoinhon · adunguoinhon</p>
+
+  <section>
+    <h2>IDENTITY</h2>
+    <p>
+      Học Sinh Chuyên Tin HSGS<br>
+      Culi tại dự án HSGS-Code Camp Hè 2025 Tại HUS<br>
+      Trưởng site Archimedes tại dự án HSGS-Code Camp Xuân 2026
+    </p>
+  </section>
+
+  <div class="decor">▓▒░ archimedes // system online ░▒▓</div>
+
+  <section>
+    <h2>QUOTE</h2>
+    <div class="quote">
+      anh không tự cho rằng bản thân mình là một<br>
+      <b>vị TRIẾT GIA RÀNH ĐỜI</b><br><br>
+      suy nghĩ người ta cũng giống như anh chỉ là họ không<br>
+      <b>VIẾT RA THÀNH LỜI</b>
+    </div>
+  </section>
+
+  <div class="decor">† encrypted mind · free soul †</div>
+
+  <section>
+    <h2>GAME</h2>
+    <p>
+      In-Game AOV: <b>&nbsp;</b><br>
+      In-Game FC Online (FCO): <b>HSGSxBinhLam</b><br>
+      UID Genshin Impact: <b>841096833</b>
+    </p>
+  </section>
+
+  <section id="contact">
+    <h2>CONTACT</h2>
+    <p>
+      Facebook:
+      <a href="https://www.facebook.com/anbinh.lam.73/" target="_blank">Lam Binh</a><br>
+      Instagram:
+      <a href="https://www.instagram.com/adunguoinhon/" target="_blank">@adunguoinhon</a><br>
+      Discord: <b>adunguoinhon</b>
+    </p>
+  </section>
+
+  <footer>
+    © 2026 · encrypted mind · free soul
+  </footer>
+
+</div>
+
+<script>
+const c=document.getElementById("matrix");
+const ctx=c.getContext("2d");
+
+function resize(){
+  c.width=innerWidth;
+  c.height=innerHeight;
+}
+resize();
+addEventListener("resize",resize);
+
+const chars="01";
+const size=14;
+let cols=Math.floor(c.width/size);
+let drops=Array(cols).fill(1);
+
+function draw(){
+  ctx.fillStyle="rgba(0,0,0,0.06)";
+  ctx.fillRect(0,0,c.width,c.height);
+  ctx.fillStyle="#00ffcc";
+  ctx.font=size+"px monospace";
+  for(let i=0;i<drops.length;i++){
+    const t=chars[Math.random()*2|0];
+    ctx.fillText(t,i*size,drops[i]*size);
+    if(drops[i]*size>c.height && Math.random()>0.97) drops[i]=0;
+    drops[i]++;
+  }
+}
+setInterval(draw,50);
+</script>
+
+</body>
+</html>
